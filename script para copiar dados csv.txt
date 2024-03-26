@@ -1,0 +1,5 @@
+copy public.tbl_endereco
+from 'C:\postos_de_saude(tbl_endereco).csv'
+delimiter ','
+csv header
+encoding 'windows-1251';

@@ -1,0 +1,68 @@
+CREATE TABLE tbl_endereco 
+    (
+     id SERIAL PRIMARY KEY, 
+     rua VARCHAR (255) NOT NULL , 
+     numero VARCHAR (255) NOT NULL , 
+     bairro VARCHAR (255) NOT NULL , 
+     cep INTEGER NOT NULL , 
+     latitude FLOAT NOT NULL , 
+     longitude FLOAT NOT NULL 
+    );
+
+CREATE TABLE tbl_especialidade 
+    (
+     id SERIAL PRIMARY KEY, 
+     especialidade VARCHAR (255) NOT NULL 
+    );
+
+CREATE TABLE tbl_exame 
+    (
+     id SERIAL PRIMARY KEY, 
+     nome_exame VARCHAR (255) NOT NULL 
+    );
+
+CREATE TABLE tbl_setor 
+    (
+     id SERIAL PRIMARY KEY, 
+     setor VARCHAR (255) NOT NULL 
+    );
+
+CREATE TABLE tbl_tipo 
+    (
+     id SERIAL PRIMARY KEY, 
+     tipo VARCHAR (255) NOT NULL 
+    );
+
+CREATE TABLE tbl_ponto 
+    (
+     id SERIAL PRIMARY KEY, 
+     nome_ponto VARCHAR (255) NOT NULL , 
+     telefone INTEGER NOT NULL , 
+     horario_funcionamento TIMESTAMP NOT NULL , 
+     tbl_tipo_ponto_saude_id INTEGER NOT NULL , 
+     tbl_setor_id INTEGER NOT NULL , 
+     tbl_tipo_id INTEGER NOT NULL , 
+     tbl_endereco_id INTEGER NOT NULL ,
+     FOREIGN KEY (tbl_endereco_id) REFERENCES tbl_endereco (id),
+     FOREIGN KEY (tbl_setor_id) REFERENCES tbl_setor (id),
+     FOREIGN KEY (tbl_tipo_id) REFERENCES tbl_tipo (id),
+     FOREIGN KEY (tbl_tipo_ponto_saude_id) REFERENCES tbl_especialidade (id)
+    );
+
+CREATE TABLE tbl_ponto_especialidade 
+    (
+     id SERIAL PRIMARY KEY, 
+     tbl_ponto_id INTEGER NOT NULL , 
+     tbl_especialidade_id INTEGER NOT NULL ,
+     FOREIGN KEY (tbl_ponto_id) REFERENCES tbl_ponto (id),
+     FOREIGN KEY (tbl_especialidade_id) REFERENCES tbl_especialidade (id)
+    );
+
+CREATE TABLE tbl_ponto_exame 
+    (
+     id SERIAL PRIMARY KEY, 
+     tbl_ponto_id INTEGER NOT NULL , 
+     tbl_exame_id INTEGER NOT NULL ,
+     FOREIGN KEY (tbl_ponto_id) REFERENCES tbl_ponto (id),
+     FOREIGN KEY (tbl_exame_id) REFERENCES tbl_exame (id)
+    );
